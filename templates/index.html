@@ -1,0 +1,57 @@
+$def with (source,target,compare)
+
+<!--
+	Version:	dev. 0.0.1 
+	Author:		Memleak13
+	Date:		02.10.13
+
+	This file contains the webfrontend. A simple page including 2 drop down 
+	menues to select the files which need to be compared
+-->
+
+<!doctype html>
+<html>
+<head>
+<style type="text/css">	
+#body {
+	margin:75px 0pt 0px;
+}
+#tablelayout {
+	font-family:arial;
+	font-size: 10pt;
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+	table-layout: fixed;
+	border-style: solid;
+	border-width: thin;
+	border-color:#c0c0c0;
+	border-radius: 0.5em;
+	padding-left: 0.5cm;
+	padding-right: 0.2cm;
+	padding-top: 0.3cm;
+	padding-bottom: 0.3cm;
+}
+#impressum {
+	font-family:arial;
+	font-size: 7pt;
+	padding-top:12px;
+	text-align: center;
+	color: SlateGray;
+	font-style: italic;
+}
+</style>
+</head>
+<body id="body">		
+<table id="tablelayout">
+<tr>
+<td>$:source.render()</td>
+<td>$:target.render()</td>
+<td style="width: 25px"> </td>
+<td>$:compare.render()</td>
+</tr>
+</table>
+<div id="impressum"> Developed by Teletrend AG for Technische Betriebe Suhr - Version dev. 0.0.1 - 10.2013</div>
+<div id="result"></div>
+</body>
+</html>
