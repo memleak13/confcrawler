@@ -11,6 +11,7 @@
 	#Todo:
 
 """
+import time
 import re
 import telnetlib
 
@@ -35,27 +36,32 @@ class TnCiscoAccess(object):
 		self.password = password
 		self.telnetoutput = ''
 
-	def no_enable(self):
+	def no_enable(self, host):
 		"""direct access to priviledged mode, no enable password used"""
-		self.tn = telnetlib.Telnet(self.ip)
+		self.tn = telnetlib.Telnet(self.ip, 23, 5)
 		self.tn.expect(TnCiscoAccess.regexlist)
 		self.tn.write(self.uid + "\n")
 		self.tn.expect(TnCiscoAccess.regexlist)
 		self.tn.write(self.password + "\n")
 		self.tn.expect(TnCiscoAccess.regexlist)
+		#print host #debug
 
-	def run_command(self,commands):
-		"""runs one or more commanda on a device
+	def run_command(self,commands, host): #debug
+		"""runs one or more commands on a device
 		
 		and returns the output
 		
 		args:
 			commands: list of commands to be run
 		"""
+		#print host #debug
 		output = ''
 		for command in commands:
-			self.tn.write(command + "\n")
+			#IMPORTANT: REMOVE NEWLINE FIRST!!!
+			self.tn.write(command.strip() + "\n")
+			print ("host: " + host + " command: " + command) #debug
 			output += self.tn.read_until(self.prompt)
+			#print ("host: " + host + " command: " + command) #debug
 		return output
 
 	def closeTCA(self):
