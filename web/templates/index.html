@@ -2,8 +2,8 @@ $def with (source,target,compare)
 
 <!--
 	Version:	dev. 0.0.1 
-	Author:		Memleak13
-	Date:		02.10.13
+	Author:		Antares
+	Date:		07.10.13
 
 	This file contains the webfrontend. A simple page including 2 drop down 
 	menues to select the files which need to be compared
@@ -15,6 +15,17 @@ $def with (source,target,compare)
 <style type="text/css">	
 #body {
 	margin:75px 0pt 0px;
+}
+#title {
+	font-family:arial;
+	font-size: 14pt;
+	color: #c0c0c0;
+	padding-left: 0.5cm;
+	padding-right: 0.2cm;
+	padding-top: 0cm;
+	padding-bottom: 0.2cm;
+	margin-right: auto;
+	margin-left: auto;
 }
 #tablelayout {
 	font-family:arial;
@@ -42,12 +53,14 @@ $def with (source,target,compare)
 }
 </style>
 </head>
-<body id="body">		
+<body id="body">
+<p id="title">ConfCrawler</p>	
 <table id="tablelayout">
 <tr>
 <td>$:source.render()</td>
+<td style="width: 8px"> </td>
 <td>$:target.render()</td>
-<td style="width: 25px"> </td>
+<td style="width: 20px"> </td>
 <td>$:compare.render()</td>
 </tr>
 </table>
