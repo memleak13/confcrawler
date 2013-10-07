@@ -1,8 +1,9 @@
+#!/usr/bin/python
 """
     Name:     confcrawler
-    Version:  Dev. 0.0.1 
-    Author:   Memleak13
-    Modified: 03.10.13
+    Version:  RC 0.0.1 
+    Author:   Antares
+    Modified: 07.10.13
     
     This script is run by a cron job. It retrieves configurations from cisco
     devices by connecting to them over telnet. These devices are stored in a 
@@ -10,20 +11,24 @@
     different commands which are stored in a file called ./commandlist.
     The configs are stored in the directory ./device_configs by appending the
     date to the name of the device.
-    
-    #Todo:  1. The App hangs. On some Devices (random) the commands are not 
-            executet, the telnet session however has been established. This
-            causes the app to hang! This does not seem to be a problem with 
-            a certain device. Sometimes it affects more othertime less devices.
 
-            Narrowed it down to the first command which seems always to be run.
-            However the second command hangs in thin air. Regarding ACS Logs it 
-            is never executed and is also never printed to stout.
+    Files:  ./device_configs/:  stores pulled configurations
+            ./conf/commandlist: contains commands (1 each line)
+            ./conf/devicelist:  stores devices (hostname ip)
+            ./cc_globals:       contains global variables   
+            ./cc_device:        device class 
+            ./j_connect:        connect module (telnet)
 
-            It does also not seem to be a timing issue (sleep) !!!
-
+    Install cronjob :   
+        1. crontab -e
+        2. 55 23 * * * /home/tbsadmin/projects/confcrawler/confcrawler.py 
+            > /home/tbsadmin/cronlog 2>&1
+ 
+    #Todo: 
 """
+import os
 from cc_device import Device
+from cc_globals import Globals
 
 class ConfCrawler(object):
     """ Main class
@@ -32,32 +37,30 @@ class ConfCrawler(object):
     """
     def __init__(self):
         
-        #fh = open('./output', 'w')
-        #test = TnCiscoAccess('10.10.10.11', 'csw01SHR', 'rconfig', 'N3bu1a!')
-        #test.no_enable()
-        #commands = ['terminal length 0', 'sh run']
-        #fh.write(test.run_command(commands))
-
-        #timestamp = datetime.datetime.now()
-        #timestamp = timestamp.strftime("%Y_%m_%d_%H_%M")
-        #print timestamp
-
+        #Credentials
         uid = 'confcrwl'
         pw = 'N3bu1aOn3!'
 
-        #Read device- and command lists
-        fh_device_list = open ('./conf/devicelist', 'r')
-        fh_command_list = open ('./conf/commandlist', 'r')
+        #Setting global variables and paths (stored in cc_globals)
+        rootdir = os.path.dirname(__file__)
+        Globals.dir_rootdir = rootdir
+        Globals.dir_deviceconfig = os.path.join(rootdir, 'device_configs/')
+        Globals.file_devicelist = os.path.join(rootdir, 'conf/devicelist')
+        Globals.file_commandlist = os.path.join(rootdir, 'conf/commandlist')
 
+        #Global = Globals()
+        #Global.print_globals()
+
+        fh_device_list = open (Globals.file_devicelist, 'r')
+        fh_command_list = open (Globals.file_commandlist, 'r')
+        
+        #read command list
         commandlist = []
         for command in fh_command_list:
             commandlist.append(command)
         print commandlist
-
-        #commandlis = ['terminal length 0', 'sh run']
-        #print commandlis
-
-        #Generate a seperate thread for each device       
+        
+        #read device list and generate a seperate thread for each device       
         threads = []
         thread_id = 1    
         for line in fh_device_list:
@@ -70,7 +73,7 @@ class ConfCrawler(object):
         #Wait for all threads to finish       
         for thread in threads:
             thread.join()
-        
+
 def run():
     crwl = ConfCrawler()
 
