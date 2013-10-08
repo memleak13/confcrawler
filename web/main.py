@@ -24,7 +24,10 @@ from customform import CustomForm
 root = os.path.dirname(__file__)
 render = web.template.render(os.path.join(root, 'templates'), cache=False)
 
-urls = ('/', 'index',)
+urls = (
+	'/', 'index',
+	'/test', 'test'
+	)
 app = web.application(urls, globals(), autoreload=False)
 application = app.wsgifunc() #when using mod_wsgi
 
@@ -55,3 +58,10 @@ class index:
 		target = self.dd_target()
 		compare = self.bu_compare()
 		return render.index(source,target,compare)
+
+class test:
+	def GET(self):
+		params = web.input()
+		source = params.source
+		target = params.target
+		return (source, target)

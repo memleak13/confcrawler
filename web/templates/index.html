@@ -11,60 +11,89 @@ $def with (source,target,compare)
 
 <!doctype html>
 <html>
-<head>
-<style type="text/css">	
-#body {
-	margin:75px 0pt 0px;
-}
-#title {
-	font-family:arial;
-	font-size: 14pt;
-	color: #c0c0c0;
-	padding-left: 0.5cm;
-	padding-right: 0.2cm;
-	padding-top: 0cm;
-	padding-bottom: 0.2cm;
-	margin-right: auto;
-	margin-left: auto;
-}
-#tablelayout {
-	font-family:arial;
-	font-size: 10pt;
-	text-align: center;
-	margin-left: auto;
-	margin-right: auto;
-	table-layout: fixed;
-	border-style: solid;
-	border-width: thin;
-	border-color:#c0c0c0;
-	border-radius: 0.5em;
-	padding-left: 0.5cm;
-	padding-right: 0.2cm;
-	padding-top: 0.3cm;
-	padding-bottom: 0.3cm;
-}
-#impressum {
-	font-family:arial;
-	font-size: 7pt;
-	padding-top:12px;
-	text-align: center;
-	color: SlateGray;
-	font-style: italic;
-}
-</style>
-</head>
-<body id="body">
-<p id="title">ConfCrawler</p>	
-<table id="tablelayout">
-<tr>
-<td>$:source.render()</td>
-<td style="width: 8px"> </td>
-<td>$:target.render()</td>
-<td style="width: 20px"> </td>
-<td>$:compare.render()</td>
-</tr>
-</table>
-<div id="impressum"> Developed by Teletrend AG for Technische Betriebe Suhr - Version dev. 0.0.1 - 10.2013</div>
-<div id="result"></div>
-</body>
+	<head>
+		<style type="text/css">	
+		#body {
+			font-family:arial;
+			font-size: 10pt;
+			text-align: center;
+			margin:35px 0pt 0px;
+		}
+		#title {
+			text-align: left;
+			font-family:arial;
+			font-size: 14pt;
+			color: #c0c0c0;
+			padding-left: 0.5cm;
+			padding-right: 0.2cm;
+			padding-top: 0cm;
+			padding-bottom: 0.2cm;
+			margin-right: auto;
+			margin-left: auto;
+		}
+		#tablelayout {
+			font-family:arial;
+			font-size: 10pt;
+			text-align: center;
+			margin-left: auto;
+			margin-right: auto;
+			table-layout: fixed;
+			border-style: solid;
+			border-width: thin;
+			border-color:#c0c0c0;
+			border-radius: 0.5em;
+			padding-left: 0.5cm;
+			padding-right: 0.2cm;
+			padding-top: 0.3cm;
+			padding-bottom: 0.3cm;
+		}
+		#impressum {
+			font-family:arial;
+			font-size: 7pt;
+			padding-top:12px;
+			text-align: center;
+			color: SlateGray;
+			font-style: italic;
+		}
+		</style>
+		<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+		<script type="text/javascript">
+			jQuery(document).ready(function() {
+				jQuery("#compare").click(function() {
+					//Get drop down values and make ajax call
+					var select_source = jQuery("#source").val();
+					var select_target = jQuery("#target").val();
+					//console.log(select_source);
+					//console.log(select_target); 
+					jQuery.ajax({
+						url: "/test", 
+						data: {
+							source: select_source,
+							target: select_target
+						}
+					})
+					//evaluate ajax response
+					.done(function(response) {
+						jQuery("#result").html(response);
+					})
+				})
+			})
+		</script>
+	</head>
+	<body id="body">
+		<p id="title">ConfCrawler</p>	
+		<table id="tablelayout">
+			<tr>
+				<td>$:source.render()</td>
+				<td style="width: 12px"> </td>
+				<td>$:target.render()</td>
+				<td style="width: 20px"> </td>
+				<td>$:compare.render()</td>
+			</tr>
+		</table>
+		<div id="impressum"> Developed by Teletrend AG for Technische Betriebe 
+			Suhr - 	Version dev. 0.0.1 - 10.2013</div>
+		<br><br>
+		<div id="result"></div>
+	</body>
 </html>
