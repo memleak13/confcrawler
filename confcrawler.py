@@ -12,12 +12,12 @@
     The configs are stored in the directory ./device_configs by appending the
     date to the name of the device.
 
-    Files:  ./device_configs/:  stores pulled configurations
-            ./conf/commandlist: contains commands (1 each line)
-            ./conf/devicelist:  stores devices (hostname ip)
-            ./cc_globals:       contains global variables   
-            ./cc_device:        device class 
-            ./j_connect:        connect module (telnet)
+    Files:  ./web/device_configs/:  stores pulled configurations
+            ./conf/commandlist:     contains commands (1 each line)
+            ./conf/devicelist:      stores devices (hostname ip)
+            ./cc_globals:           contains global variables   
+            ./cc_device:            device class 
+            ./j_connect:            connect module (telnet)
 
     Install cronjob :   
         1. crontab -e
@@ -44,7 +44,7 @@ class ConfCrawler(object):
         #Setting global variables and paths (stored in cc_globals)
         rootdir = os.path.dirname(__file__)
         Globals.dir_rootdir = rootdir
-        Globals.dir_deviceconfig = os.path.join(rootdir, 'device_configs/')
+        Globals.dir_deviceconfig = os.path.join(rootdir, 'web/device_configs/')
         Globals.file_devicelist = os.path.join(rootdir, 'conf/devicelist')
         Globals.file_commandlist = os.path.join(rootdir, 'conf/commandlist')
 

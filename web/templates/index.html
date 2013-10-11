@@ -55,6 +55,44 @@ $def with (source,target,compare)
 			color: SlateGray;
 			font-style: italic;
 		}
+		#result {
+			margin-left: auto;
+			margin-right: auto;
+
+		}
+		.diff{
+			font-family:arial;
+			font-size: 7pt;
+			text-align: left;
+			margin-left: auto;
+			margin-right: auto;
+			table-layout: fixed;
+			border-style: solid;
+			border-width: thin;
+			border-color:#c0c0c0;
+			border-radius: 0.5em;
+			padding-left: 1.5cm;
+			padding-right: 1.2cm;
+			padding-top: 1.3cm;
+			padding-bottom: 1.3cm;
+		}
+		.diff_next{
+			width: 15px;
+			background-color: silver;
+		}
+		.diff_header{
+			width: 15px;
+			background-color: LightSteelBlue;
+		}
+		.diff_sub{
+			background-color: LightYellow;
+		}
+		.diff_add{
+			background-color: GreenYellow;
+		}
+		.diff_chg{
+			background-color: Aquamarine;
+		}		
 		</style>
 		<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 		<script type="text/javascript">
@@ -66,7 +104,7 @@ $def with (source,target,compare)
 					//console.log(select_source);
 					//console.log(select_target); 
 					jQuery.ajax({
-						url: "/test", 
+						url: "/compare", 
 						data: {
 							source: select_source,
 							target: select_target
