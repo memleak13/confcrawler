@@ -1,8 +1,8 @@
 """
  	Name: 		j_connect
- 	Version:	RC 0.0.1 
+ 	Version:	0.1 
  	Author:		Antares
- 	Modified:	07.10.13
+ 	Modified:	22.10.13
  	
  	This module provides access to devices over telnet.
 
