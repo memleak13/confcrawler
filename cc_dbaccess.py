@@ -39,7 +39,7 @@ class XMLConfig(object):
 		for child in el_device: 
 			if child.tag == 'last_change':
 				child.text = filename
-		self.tree.write('./conf/conf.xml', pretty_print=True, method='xml', 
+		self.tree.write(Globals.file_configuration, pretty_print=True, method='xml', 
 			xml_declaration=True)
 
 	def get_last_snap(self, device):
