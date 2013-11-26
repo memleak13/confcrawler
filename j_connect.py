@@ -8,7 +8,8 @@
 
  	Supported devices: Cisco
   
-	#Todo:
+	#Todo: 
+		v.0.2 - "conf t" mode added to run_command
 
 """
 import re
@@ -95,7 +96,11 @@ class TnCiscoAccess(object):
 		for command in commands:
 			#IMPORTANT: REMOVE NEWLINE FIRST!!!
 			self.tn.write(command.strip() + "\n")
-			output += self.tn.read_until(self.priv_prompt)
+			#output += self.tn.read_until(self.priv_prompt, 10)
+			
+			# better to use "expect" to catch "conf t" mode - v.0.2
+			tu_output = self.tn.expect(TnCiscoAccess.regexlist)
+            output += tu_output[2]
 			#print ("host: " + host + " command: " + command) #debug
 		return output
 
